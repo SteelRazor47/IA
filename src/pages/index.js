@@ -11,10 +11,10 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const sections = [
-  { title: "Storia", url: "/history" },
-  { title: "Etica", url: "/ethics" },
-  { title: "Arte", url: "/art" },
-  { title: "Matematica", url: "/maths" },
+  { title: "Storia", url: "./history" },
+  { title: "Etica", url: "./ethics" },
+  { title: "Arte", url: "./art" },
+  { title: "Matematica", url: "./maths" },
 ]
 
 export default function Home() {
