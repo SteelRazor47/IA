@@ -5,8 +5,9 @@ import Toolbar from "@material-ui/core/Toolbar"
 import Typography from "@material-ui/core/Typography"
 import Link from "@material-ui/core/Link"
 import { IconButton, Icon, Switch } from "@material-ui/core"
-import BrightnessHighIcon from '@material-ui/icons/BrightnessHigh';
-import Brightness3Icon from '@material-ui/icons/Brightness3';
+import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
+import Brightness3Icon from "@material-ui/icons/Brightness3"
+import { Link as GatsbyLink} from "gatsby"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -35,12 +36,22 @@ export default function Header(props) {
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
-        <IconButton href="/" style={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <IconButton
+          component={GatsbyLink} to="/"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Icon fontSize="large">
-            <img src={logo} style={{height: "100%", lineHeight: "normal"}} alt="Logo icon"/>
+            <img
+              src={logo}
+              style={{ height: "100%", lineHeight: "normal" }}
+              alt="Logo icon"
+            />
           </Icon>
         </IconButton>
-          
 
         <Typography
           component="h2"
@@ -66,7 +77,7 @@ export default function Header(props) {
             noWrap
             key={section.title}
             variant="body2"
-            href={section.url}
+            component={GatsbyLink} to={section.url}
             className={classes.toolbarLink}
           >
             {section.title}
