@@ -1,5 +1,5 @@
 <p align="center">
-    <a href="https://steelrazor47.github.io/IA/">
+    <a href="https://steelrazor47.github.io/IA/" target="_blank" rel="noopener noreferrer">
         <img src="./src/assets/chip.svg" style="height:80px"/>
     </a>
 </p>
@@ -40,4 +40,4 @@ The following code will be specific to Ubuntu 20.04 LTS, installation scripts ma
 
 Check out Gatsby's [guide](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/how-gatsby-works-with-github-pages/) about how to deploy a Gatsby website to Github Pages.
 
-###### Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+###### Icons made by <a href="https://www.flaticon.com/authors/kiranshastry" target="_blank" rel="noopener noreferrer" title="Kiranshastry">Kiranshastry</a> from <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer" title="Flaticon">www.flaticon.com</a>
