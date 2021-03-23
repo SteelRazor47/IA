@@ -7,7 +7,7 @@ import Link from "@material-ui/core/Link"
 import { IconButton, Icon, Switch } from "@material-ui/core"
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
 import Brightness3Icon from "@material-ui/icons/Brightness3"
-import { Link as GatsbyLink} from "gatsby"
+import { Link as GatsbyLink } from "gatsby"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -37,7 +37,8 @@ export default function Header(props) {
     <React.Fragment>
       <Toolbar className={classes.toolbar}>
         <IconButton
-          component={GatsbyLink} to="/"
+          component={GatsbyLink}
+          to="/"
           style={{
             display: "flex",
             justifyContent: "center",
@@ -77,7 +78,8 @@ export default function Header(props) {
             noWrap
             key={section.title}
             variant="body2"
-            component={GatsbyLink} to={section.url}
+            component={GatsbyLink}
+            to={section.url}
             className={classes.toolbarLink}
           >
             {section.title}
