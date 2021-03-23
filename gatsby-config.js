@@ -6,6 +6,13 @@
 
 module.exports = {
   /* Your site config here */
-  plugins: [],
+  plugins: [
+    {
+      resolve: "gatsby-plugin-favicon",
+      options: {
+        logo: "./src/assets/chip.svg",
+      },
+    },
+  ],
   pathPrefix: "/IA",
 }
