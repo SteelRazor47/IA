@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import PropTypes from "prop-types"
 import { makeStyles } from "@material-ui/core/styles"
 import Toolbar from "@material-ui/core/Toolbar"
@@ -8,6 +8,7 @@ import { IconButton, Icon, Switch } from "@material-ui/core"
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
 import Brightness3Icon from "@material-ui/icons/Brightness3"
 import { Link as GatsbyLink } from "gatsby"
+import { context } from "./provider"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -28,10 +29,10 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header(props) {
   const classes = useStyles()
-  const { sections, title, darkMode, setDarkMode } = props
-
+  const { sections, title } = props
+  const { isDark, changeTheme } = useContext(context)
   const logo = require("../assets/chip.svg")
-  const darkModeIcon = darkMode ? <Brightness3Icon /> : <BrightnessHighIcon />
+  const themeIcon = isDark ? <Brightness3Icon /> : <BrightnessHighIcon />
 
   return (
     <React.Fragment>
@@ -64,8 +65,8 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        {darkModeIcon}
-        <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
+        {themeIcon}
+        <Switch checked={isDark} onChange={() => changeTheme(!isDark)} />
       </Toolbar>
       <Toolbar
         component="nav"
