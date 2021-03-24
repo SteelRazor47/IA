@@ -1,6 +1,6 @@
 export const sections = [
-  { title: "Storia", url: "/history" },
-  { title: "Etica", url: "/ethics" },
-  { title: "Arte", url: "/art" },
-  { title: "Matematica", url: "/maths" },
+  { title: "Aspetti Tecnici", url: "/aspetti-tecnici" },
+  { title: "Aspetti Etici", url: "/aspetti-etici" },
+  { title: "Aspetti Giuridici", url: "/aspetti-giuridici" },
+  { title: "Applicazioni Reali", url: "/applicazioni-reali" },
 ]

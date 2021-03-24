@@ -20,7 +20,7 @@ export default function Layout({ children }) {
     <React.Fragment>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Container maxWidth="lg" style={{ lineHeight: 0 }}>
+        <Container maxWidth="lg">
           <Header title="IA" sections={sections} />
           {children}
           <Footer />
