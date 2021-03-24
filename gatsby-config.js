@@ -13,6 +13,21 @@ module.exports = {
         logo: "./src/assets/chip.svg",
       },
     },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "pages",
+        path: "./src/pages/",
+      },
+    },
+    {
+      resolve: "gatsby-plugin-mdx",
+      options: {
+        defaultLayouts: {
+          default: require.resolve("./src/components/Layout.js"),
+        },
+      },
+    },
   ],
   pathPrefix: "/IA",
 }
