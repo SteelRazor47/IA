@@ -28,6 +28,7 @@ module.exports = {
         },
       },
     },
+    "gatsby-theme-material-ui",
   ],
   pathPrefix: "/IA",
 }

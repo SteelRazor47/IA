@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-export const context = React.createContext({isDark: false, changeTheme: () => setTheme(!isDark)})
+export const context = React.createContext({isDark: false, changeTheme: () => {}})
 
 const Provider = props => {
   const [isDark, setTheme] = useState(false)
