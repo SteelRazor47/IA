@@ -28,11 +28,24 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Header(props) {
+  const isDark = useContext(context).isDark
+  const changeTheme = useContext(context).changeTheme
   const classes = useStyles()
+
+  let toggle = <Switch checked={isDark} onChange={() => changeTheme(!isDark)} />
+  let themeIcon = isDark ? <Brightness3Icon /> : <BrightnessHighIcon />
+  const [hasMounted, setHasMounted] = React.useState(false)
+  React.useEffect(() => {
+    setHasMounted(true)
+  }, []);
+  if (!hasMounted) {
+    toggle = null
+    themeIcon = null
+  }
+  
+
   const { sections, title } = props
-  const { isDark, changeTheme } = useContext(context)
   const logo = require("../assets/chip.svg")
-  const themeIcon = isDark ? <Brightness3Icon /> : <BrightnessHighIcon />
 
   return (
     <React.Fragment>
@@ -66,7 +79,7 @@ export default function Header(props) {
           {title}
         </Typography>
         {themeIcon}
-        <Switch checked={isDark} onChange={() => changeTheme(!isDark)} />
+        {toggle}
       </Toolbar>
       <Toolbar
         component="nav"

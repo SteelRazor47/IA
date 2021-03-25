@@ -1,9 +1,23 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
-export const context = React.createContext({isDark: false, changeTheme: () => {}})
+function useStickyState(defaultValue, key) {
+  const [value, setValue] = useState(() => {
+    const stickyValue = window && window.localStorage.getItem(key)
+    return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue
+  })
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value])
+  return [value, setValue]
+}
+
+export const context = React.createContext({
+  isDark: false,
+  changeTheme: () => {},
+})
 
 const Provider = props => {
-  const [isDark, setTheme] = useState(false)
+  const [isDark, setTheme] = useStickyState(false, "isDark")
 
   return (
     <context.Provider
