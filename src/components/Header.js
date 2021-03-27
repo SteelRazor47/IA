@@ -9,6 +9,7 @@ import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
 import Brightness3Icon from "@material-ui/icons/Brightness3"
 import { Link as GatsbyLink } from "gatsby"
 import { context } from "./provider"
+import logo from "../assets/chip.svg"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -31,7 +32,6 @@ export default function Header(props) {
   const classes = useStyles()
   const { sections, title } = props
   const { isDark, changeTheme } = useContext(context)
-  const logo = require("../assets/chip.svg")
   const themeIcon = isDark ? <Brightness3Icon /> : <BrightnessHighIcon />
 
   return (

@@ -8,12 +8,6 @@ module.exports = {
   /* Your site config here */
   plugins: [
     {
-      resolve: "gatsby-plugin-favicon",
-      options: {
-        logo: "./src/assets/chip.svg",
-      },
-    },
-    {
       resolve: "gatsby-source-filesystem",
       options: {
         name: "pages",
