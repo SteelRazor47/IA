@@ -7,6 +7,9 @@ import Header from "./Header"
 import Footer from "./Footer"
 import "@fontsource/roboto"
 import { context } from "./provider"
+import { Helmet } from "react-helmet"
+import logo from "../assets/chip.svg"
+
 
 export default function Layout({ children }) {
   const darkMode = useContext(context).isDark
@@ -18,6 +21,10 @@ export default function Layout({ children }) {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <title>IA</title>
+        <link rel="icon" type="image/png" href={logo} sizes="16x16" />
+      </Helmet>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Container maxWidth="lg">
