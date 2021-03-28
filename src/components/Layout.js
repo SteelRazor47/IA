@@ -20,6 +20,15 @@ export default function Layout({ data }) {
     palette: {
       type: darkMode ? "dark" : "light",
     },
+    overrides: {
+      MuiCssBaseline: {
+        "@global": {
+          html: {
+            scrollBehavior: "smooth",
+          },
+        },
+      },
+    },
   })
 
   return (
@@ -32,7 +41,7 @@ export default function Layout({ data }) {
         <CssBaseline />
         <Container maxWidth="md">
           {typeof tableOfContents.items === "undefined" ? null : (
-            <ToC tableOfContents={tableOfContents}/>
+            <ToC tableOfContents={tableOfContents} />
           )}
           <Header title="IA" sections={sections} />
 
