@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
     maxHeight: "40vh",
     display: "flex",
     flexDirection: "column",
+    paddingBottom: theme.spacing(3),
   },
   scroll: {
     scrollbarWidth: "none",
@@ -54,6 +55,9 @@ const useStyles = makeStyles(theme => ({
       transform: "scaleX(1)",
       transition: "transform 250ms ease-in-out",
       transformOrigin: "0 50%",
+    },
+    "&:hover": {
+      textDecoration: "none",
     },
   },
 }))
@@ -119,7 +123,8 @@ function useActiveId(itemIds) {
 
     return () => {
       itemIds.forEach(id => {
-        observer.unobserve(document.getElementById(id))
+        if (document.getElementById(id) !== null)
+          observer.unobserve(document.getElementById(id))
       })
     }
   }, [itemIds])
