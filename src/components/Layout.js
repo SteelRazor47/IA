@@ -1,21 +1,34 @@
 import React, { useContext } from "react"
-import { sections } from "../assets/data"
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import Container from "@material-ui/core/Container"
-import Header from "./Header"
-import Footer from "./Footer"
-import "@fontsource/roboto"
-import { context } from "./provider"
 import { Helmet } from "react-helmet"
-import logo from "../assets/chip.svg"
+import {
+  ThemeProvider,
+  createMuiTheme,
+  makeStyles,
+  CssBaseline,
+  Container,
+} from "@material-ui/core"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
+import { sections } from "../assets/data"
+import Header from "./Header"
+import Footer from "./Footer"
+import { context } from "./provider"
+import logo from "../assets/chip.svg"
 import ToC from "./ToC"
+import "@fontsource/roboto"
+
+const useStyles = makeStyles(theme => ({
+  content: {
+    width: "69%",
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+  },
+}))
 
 export default function Layout({ data }) {
   const { body, tableOfContents } = data.mdx
   const darkMode = useContext(context).isDark
+  const classes = useStyles()
   const darkTheme = createMuiTheme({
     palette: {
       type: darkMode ? "dark" : "light",
@@ -39,13 +52,14 @@ export default function Layout({ data }) {
       </Helmet>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Container maxWidth="md">
+        <Container maxWidth={false}>
+          <Header title="IA" sections={sections} />
+          <div className={classes.content}>
+            <MDXRenderer>{body}</MDXRenderer>
+          </div>
           {typeof tableOfContents.items === "undefined" ? null : (
             <ToC tableOfContents={tableOfContents} />
           )}
-          <Header title="IA" sections={sections} />
-
-          <MDXRenderer>{body}</MDXRenderer>
           <Footer />
         </Container>
       </ThemeProvider>
