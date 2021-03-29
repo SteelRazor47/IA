@@ -1,21 +1,46 @@
 import React, { useContext } from "react"
+import { Helmet } from "react-helmet"
+import {
+  ThemeProvider,
+  createMuiTheme,
+  makeStyles,
+  CssBaseline,
+  Container,
+} from "@material-ui/core"
+import { graphql } from "gatsby"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 import { sections } from "../assets/data"
-import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles"
-import CssBaseline from "@material-ui/core/CssBaseline"
-import Container from "@material-ui/core/Container"
 import Header from "./Header"
 import Footer from "./Footer"
-import "@fontsource/roboto"
 import { context } from "./provider"
-import { Helmet } from "react-helmet"
 import logo from "../assets/chip.svg"
+import ToC from "./ToC"
+import "@fontsource/roboto"
 
+const useStyles = makeStyles(theme => ({
+  content: {
+    width: "69%",
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3),
+  },
+}))
 
-export default function Layout({ children }) {
+export default function Layout({ data }) {
+  const { body, tableOfContents } = data.mdx
   const darkMode = useContext(context).isDark
+  const classes = useStyles()
   const darkTheme = createMuiTheme({
     palette: {
       type: darkMode ? "dark" : "light",
+    },
+    overrides: {
+      MuiCssBaseline: {
+        "@global": {
+          html: {
+            scrollBehavior: "smooth",
+          },
+        },
+      },
     },
   })
 
@@ -27,12 +52,26 @@ export default function Layout({ children }) {
       </Helmet>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Container maxWidth="lg">
+        <Container maxWidth={false}>
           <Header title="IA" sections={sections} />
-          {children}
+          <div className={classes.content}>
+            <MDXRenderer>{body}</MDXRenderer>
+          </div>
+          {typeof tableOfContents.items === "undefined" ? null : (
+            <ToC tableOfContents={tableOfContents} />
+          )}
           <Footer />
         </Container>
       </ThemeProvider>
     </React.Fragment>
   )
 }
+
+export const query = graphql`
+  query PostBySlug($slug: String!) {
+    mdx(fields: { slug: { eq: $slug } }) {
+      body
+      tableOfContents
+    }
+  }
+`

@@ -10,8 +10,8 @@ module.exports = {
     {
       resolve: "gatsby-source-filesystem",
       options: {
-        name: "pages",
-        path: "./src/pages/",
+        name: "mdxPages",
+        path: `${__dirname}/src/mdxPages/`,
       },
     },
     {
@@ -20,6 +20,7 @@ module.exports = {
         defaultLayouts: {
           default: require.resolve("./src/components/Layout.js"),
         },
+        gatsbyRemarkPlugins: [`gatsby-remark-autolink-headers`],
       },
     },
     "gatsby-theme-material-ui",
