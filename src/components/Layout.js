@@ -6,6 +6,7 @@ import {
   makeStyles,
   CssBaseline,
   Container,
+  Grid,
 } from "@material-ui/core"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -16,14 +17,6 @@ import { context } from "./provider"
 import logo from "../assets/chip.svg"
 import ToC from "./ToC"
 import "@fontsource/roboto"
-
-const useStyles = makeStyles(theme => ({
-  content: {
-    width: "69%",
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3),
-  },
-}))
 
 export default function Layout({ data }) {
   const { body, tableOfContents } = data.mdx
@@ -54,13 +47,21 @@ export default function Layout({ data }) {
         <CssBaseline />
         <Container maxWidth={false}>
           <Header title="IA" sections={sections} />
-          <div className={classes.content}>
-            <MDXRenderer>{body}</MDXRenderer>
-          </div>
-          {typeof tableOfContents.items === "undefined" ? null : (
-            <ToC tableOfContents={tableOfContents} />
-          )}
-          <Footer />
+          <Grid container>
+            <Grid item xs={8}>
+              <Container maxWidth="sm">
+                <MDXRenderer>{body}</MDXRenderer>
+              </Container>
+            </Grid>
+            <Grid item xs={4}>
+              {typeof tableOfContents.items === "undefined" ? null : (
+                <ToC tableOfContents={tableOfContents} />
+              )}
+            </Grid>
+            <Grid item xs={12}>
+              <Footer />
+            </Grid>
+          </Grid>
         </Container>
       </ThemeProvider>
     </React.Fragment>

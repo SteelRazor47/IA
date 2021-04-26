@@ -4,15 +4,18 @@ import { Link as GatsbyLink } from "gatsby"
 
 const useStyles = makeStyles(theme => ({
   toc: {
-    position: "fixed",
+    position: "-webkit-sticky" /* Safari */,
+    position: "sticky",
     top: "50%",
-    width: "30%",
-    right: theme.spacing(3),
+    padding: theme.spacing(4),
     transform: "translate(0, -50%)",
-    maxHeight: "40vh",
+    maxHeight: "50vh",
     display: "flex",
     flexDirection: "column",
-    paddingBottom: theme.spacing(3),
+  },
+  ul: {
+    listStyleType: "none",
+    paddingLeft: theme.spacing(0),
   },
   scroll: {
     scrollbarWidth: "none",
@@ -25,7 +28,6 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     overflow: "visible",
   },
-
   underline: {
     position: "relative",
     display: "inline-block",
@@ -62,9 +64,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function renderItems(items, activeId) {
+function renderItems(items, activeId, classes) {
   return (
-    <ul style={{ listStyleType: "none" }}>
+    <ul className={classes.ul}>
       {items.map(item => (
         <li key={item.url}>
           <Link
@@ -76,13 +78,13 @@ function renderItems(items, activeId) {
             to={item.url}
             className={
               activeId === item.url.slice(1)
-                ? useStyles().activeUnderline
-                : useStyles().underline
+                ? classes.activeUnderline
+                : classes.underline
             }
           >
             {item.title}
           </Link>
-          {item.items && renderItems(item.items)}
+          {item.items && renderItems(item.items, activeId, classes)}
         </li>
       ))}
     </ul>
@@ -150,7 +152,7 @@ export default function ToC({ tableOfContents }) {
           Indice
         </Typography>
         <div className={classes.scroll}>
-          {renderItems(tableOfContents.items, activeId)}
+          {renderItems(tableOfContents.items, activeId, classes)}
         </div>
       </Paper>
     </React.Fragment>
