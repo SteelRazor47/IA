@@ -4,7 +4,6 @@ import { Link as GatsbyLink } from "gatsby"
 
 const useStyles = makeStyles(theme => ({
   toc: {
-    position: "-webkit-sticky" /* Safari */,
     position: "sticky",
     top: "50%",
     padding: theme.spacing(4),
@@ -13,9 +12,13 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
   },
-  ul: {
+  ulFirstLevel: {
     listStyleType: "none",
     paddingLeft: theme.spacing(0),
+  },
+  ulOther: {
+    listStyleType: "none",
+    paddingLeft: theme.spacing(4),
   },
   scroll: {
     scrollbarWidth: "none",
@@ -34,9 +37,9 @@ const useStyles = makeStyles(theme => ({
     "&:after": {
       display: "block",
       content: "''",
-      borderBottom: "solid 1px #000",
+      borderBottom: `solid 2px ${theme.palette.text.primary}`,
       transform: "scaleX(0)",
-      transition: "transform 250ms ease-in-out",
+      transition: "transform 1000ms ease-in-out",
       transformOrigin: "100% 50%",
     },
     "&:hover": {
@@ -53,9 +56,9 @@ const useStyles = makeStyles(theme => ({
     "&:after": {
       display: "block",
       content: "''",
-      borderBottom: "solid 1px #000",
+      borderBottom: `solid 2px ${theme.palette.text.primary}`,
       transform: "scaleX(1)",
-      transition: "transform 250ms ease-in-out",
+      transition: "transform 1000ms ease-in-out",
       transformOrigin: "0 50%",
     },
     "&:hover": {
@@ -64,9 +67,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function renderItems(items, activeId, classes) {
+function renderItems(items, activeId, classes, style) {
   return (
-    <ul className={classes.ul}>
+    <ul className={style}>
       {items.map(item => (
         <li key={item.url}>
           <Link
@@ -84,7 +87,8 @@ function renderItems(items, activeId, classes) {
           >
             {item.title}
           </Link>
-          {item.items && renderItems(item.items, activeId, classes)}
+          {item.items &&
+            renderItems(item.items, activeId, classes, classes.ulOther)}
         </li>
       ))}
     </ul>
@@ -135,7 +139,7 @@ function useActiveId(itemIds) {
 }
 
 export default function ToC({ tableOfContents }) {
-  const idList = getIds(tableOfContents.items)
+  const idList = getIds(tableOfContents)
   const activeId = useActiveId(idList)
   const classes = useStyles()
   return (
@@ -144,7 +148,7 @@ export default function ToC({ tableOfContents }) {
         <Typography
           component="h2"
           variant="h5"
-          color="inherit"
+          color="primary"
           align="center"
           noWrap
           className={classes.title}
@@ -152,7 +156,12 @@ export default function ToC({ tableOfContents }) {
           Indice
         </Typography>
         <div className={classes.scroll}>
-          {renderItems(tableOfContents.items, activeId, classes)}
+          {renderItems(
+            tableOfContents,
+            activeId,
+            classes,
+            classes.ulFirstLevel
+          )}
         </div>
       </Paper>
     </React.Fragment>

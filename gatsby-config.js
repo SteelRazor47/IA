@@ -22,13 +22,32 @@ module.exports = {
       },
     },
     {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "mdxPages",
+        path: `${__dirname}/src/assets/applicazioni-reali-img`,
+      },
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "mdxPages",
+        path: `${__dirname}/src/assets/aspetti-giuridici-img`,
+      },
+    },
+    {
       resolve: "gatsby-plugin-mdx",
       options: {
         defaultLayouts: {
           default: require.resolve("./src/components/Layout.js"),
         },
         gatsbyRemarkPlugins: [
-          "gatsby-remark-autolink-headers",
+          {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              icon: false,
+            },
+          },
           "gatsby-remark-images",
         ],
       },

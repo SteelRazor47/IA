@@ -21,6 +21,8 @@ const useStyles = makeStyles(theme => ({
   toolbarSecondary: {
     justifyContent: "space-between",
     overflowX: "auto",
+    borderBottom: `1px solid ${theme.palette.divider}`,
+    marginBottom: theme.spacing(3),
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -70,7 +72,7 @@ export default function Header(props) {
         <Typography
           component="h2"
           variant="h5"
-          color="inherit"
+          color="primary"
           align="center"
           noWrap
           className={classes.toolbarTitle}
