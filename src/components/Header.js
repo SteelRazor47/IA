@@ -11,7 +11,9 @@ import {
   Hidden,
   Divider,
   AppBar,
+  Slide,
   useTheme,
+  useScrollTrigger,
 } from "@material-ui/core"
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
 import Brightness3Icon from "@material-ui/icons/Brightness3"
@@ -65,75 +67,77 @@ export default function Header(props) {
 
   return (
     <React.Fragment>
-      <AppBar
-        style={{ background: theme.palette.background.default }}
-        elevation={0}
-        position="sticky"
-      >
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            component={GatsbyLink}
-            to="/"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Icon fontSize="large">
-              <img
-                src={logo}
-                style={{ height: "100%", lineHeight: "normal" }}
-                alt="Logo icon"
-              />
-            </Icon>
-          </IconButton>
-
-          <Typography
-            component="h2"
-            variant="h5"
-            color="primary"
-            align="center"
-            noWrap
-            className={classes.toolbarTitle}
-          >
-            {title}
-          </Typography>
-          <Hidden smDown>
-            {themeIcon}
-            {toggle}
-          </Hidden>
-          <Hidden mdUp>
-            <IconButton
-              onClick={() => {
-                setDrawerOpen(true)
-              }}
-              className={classes.button}
-            >
-              <MenuIcon />
-            </IconButton>
-          </Hidden>
-        </Toolbar>
-        <Toolbar
-          component="nav"
-          variant="dense"
-          className={classes.toolbarSecondary}
+      <HideOnScroll {...props}>
+        <AppBar
+          color={theme.palette.background.default}
+          elevation={0}
+          position="sticky"
         >
-          {sections.map(section => (
-            <Link
-              color="inherit"
-              noWrap
-              key={section.title}
-              variant="body2"
+          <Toolbar className={classes.toolbar}>
+            <IconButton
               component={GatsbyLink}
-              to={section.url}
-              className={classes.toolbarLink}
+              to="/"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
-              {section.title}
-            </Link>
-          ))}
-        </Toolbar>
-      </AppBar>
+              <Icon fontSize="large">
+                <img
+                  src={logo}
+                  style={{ height: "100%", lineHeight: "normal" }}
+                  alt="Logo icon"
+                />
+              </Icon>
+            </IconButton>
+
+            <Typography
+              component="h2"
+              variant="h5"
+              color="primary"
+              align="center"
+              noWrap
+              className={classes.toolbarTitle}
+            >
+              {title}
+            </Typography>
+            <Hidden smDown>
+              {themeIcon}
+              {toggle}
+            </Hidden>
+            <Hidden mdUp>
+              <IconButton
+                onClick={() => {
+                  setDrawerOpen(true)
+                }}
+                className={classes.button}
+              >
+                <MenuIcon />
+              </IconButton>
+            </Hidden>
+          </Toolbar>
+          <Toolbar
+            component="nav"
+            variant="dense"
+            className={classes.toolbarSecondary}
+          >
+            {sections.map(section => (
+              <Link
+                color="inherit"
+                noWrap
+                key={section.title}
+                variant="body2"
+                component={GatsbyLink}
+                to={section.url}
+                className={classes.toolbarLink}
+              >
+                {section.title}
+              </Link>
+            ))}
+          </Toolbar>
+        </AppBar>
+      </HideOnScroll>
       <Drawer
         anchor="right"
         open={isDrawerOpen}
@@ -154,5 +158,16 @@ export default function Header(props) {
         />
       </Drawer>
     </React.Fragment>
+  )
+}
+
+function HideOnScroll(props) {
+  const { children } = props
+  const trigger = useScrollTrigger()
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
   )
 }
