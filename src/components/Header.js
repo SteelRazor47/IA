@@ -32,9 +32,9 @@ const useStyles = makeStyles(theme => ({
     overflowX: "auto",
     borderBottom: `1px solid ${theme.palette.divider}`,
     marginBottom: theme.spacing(3),
-    [theme.breakpoints.down("xs")]:{
-      flexDirection: "column"
-    }
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+    },
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -140,7 +140,10 @@ export default function Header(props) {
           {toggle}
         </Toolbar>
         <Divider />
-        <ToCDrawer tableOfContents={table} />
+        <ToCDrawer
+          tableOfContents={table}
+          closeDrawer={() => setDrawerOpen(false)}
+        />
       </Drawer>
     </React.Fragment>
   )

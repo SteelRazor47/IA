@@ -75,7 +75,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function RenderItemsList({ items, activeId, level }) {
+function RenderItemsList({ items, activeId, level, closeDrawer }) {
   const classes = useStyles()
   const theme = useTheme()
   return (
@@ -98,6 +98,7 @@ function RenderItemsList({ items, activeId, level }) {
                   ? classes.activeUnderline
                   : classes.underline
               }
+              onClick={() => closeDrawer()}
             >
               {item.title}
             </Link>
@@ -108,6 +109,7 @@ function RenderItemsList({ items, activeId, level }) {
               items={item.items}
               activeId={activeId}
               level={level + 4}
+              closeDrawer={closeDrawer}
             />
           )}
         </React.Fragment>
@@ -217,7 +219,7 @@ export default function ToC({ tableOfContents }) {
   )
 }
 
-export function ToCDrawer({ tableOfContents }) {
+export function ToCDrawer({ tableOfContents, closeDrawer }) {
   const idList = getIds(tableOfContents)
   const activeId = useActiveId(idList)
   const classes = useStyles()
@@ -237,6 +239,7 @@ export function ToCDrawer({ tableOfContents }) {
         <RenderItemsList
           items={tableOfContents}
           activeId={activeId}
+          closeDrawer={closeDrawer}
           level={0}
         />
       </List>
