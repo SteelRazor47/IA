@@ -10,6 +10,8 @@ import {
   Drawer,
   Hidden,
   Divider,
+  AppBar,
+  useTheme,
 } from "@material-ui/core"
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
 import Brightness3Icon from "@material-ui/icons/Brightness3"
@@ -31,7 +33,6 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "space-between",
     overflowX: "auto",
     borderBottom: `1px solid ${theme.palette.divider}`,
-    marginBottom: theme.spacing(3),
     [theme.breakpoints.down("xs")]: {
       flexDirection: "column",
     },
@@ -47,6 +48,7 @@ export default function Header(props) {
   const changeTheme = useContext(context).changeTheme
   const classes = useStyles()
   const [isDrawerOpen, setDrawerOpen] = useState(false)
+  const theme = useTheme()
 
   let toggle = <Switch checked={isDark} onChange={() => changeTheme(!isDark)} />
   let themeIcon = isDark ? <Brightness3Icon /> : <BrightnessHighIcon />
@@ -63,69 +65,75 @@ export default function Header(props) {
 
   return (
     <React.Fragment>
-      <Toolbar className={classes.toolbar}>
-        <IconButton
-          component={GatsbyLink}
-          to="/"
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Icon fontSize="large">
-            <img
-              src={logo}
-              style={{ height: "100%", lineHeight: "normal" }}
-              alt="Logo icon"
-            />
-          </Icon>
-        </IconButton>
-
-        <Typography
-          component="h2"
-          variant="h5"
-          color="primary"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {title}
-        </Typography>
-        <Hidden smDown>
-          {themeIcon}
-          {toggle}
-        </Hidden>
-        <Hidden mdUp>
-          <IconButton
-            onClick={() => {
-              setDrawerOpen(true)
-            }}
-            className={classes.button}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Hidden>
-      </Toolbar>
-      <Toolbar
-        component="nav"
-        variant="dense"
-        className={classes.toolbarSecondary}
+      <AppBar
+        style={{ background: theme.palette.background.default }}
+        elevation={0}
+        position="sticky"
       >
-        {sections.map(section => (
-          <Link
-            color="inherit"
-            noWrap
-            key={section.title}
-            variant="body2"
+        <Toolbar className={classes.toolbar}>
+          <IconButton
             component={GatsbyLink}
-            to={section.url}
-            className={classes.toolbarLink}
+            to="/"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            {section.title}
-          </Link>
-        ))}
-      </Toolbar>
+            <Icon fontSize="large">
+              <img
+                src={logo}
+                style={{ height: "100%", lineHeight: "normal" }}
+                alt="Logo icon"
+              />
+            </Icon>
+          </IconButton>
+
+          <Typography
+            component="h2"
+            variant="h5"
+            color="primary"
+            align="center"
+            noWrap
+            className={classes.toolbarTitle}
+          >
+            {title}
+          </Typography>
+          <Hidden smDown>
+            {themeIcon}
+            {toggle}
+          </Hidden>
+          <Hidden mdUp>
+            <IconButton
+              onClick={() => {
+                setDrawerOpen(true)
+              }}
+              className={classes.button}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Hidden>
+        </Toolbar>
+        <Toolbar
+          component="nav"
+          variant="dense"
+          className={classes.toolbarSecondary}
+        >
+          {sections.map(section => (
+            <Link
+              color="inherit"
+              noWrap
+              key={section.title}
+              variant="body2"
+              component={GatsbyLink}
+              to={section.url}
+              className={classes.toolbarLink}
+            >
+              {section.title}
+            </Link>
+          ))}
+        </Toolbar>
+      </AppBar>
       <Drawer
         anchor="right"
         open={isDrawerOpen}

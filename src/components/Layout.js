@@ -9,6 +9,7 @@ import {
   Grid,
   Hidden,
   Link,
+  useTheme,
 } from "@material-ui/core"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -67,6 +68,8 @@ export default function Layout({ data }) {
     [darkMode]
   )
 
+  const theme = useTheme()
+
   return (
     <React.Fragment>
       <Helmet>
@@ -75,9 +78,9 @@ export default function Layout({ data }) {
       </Helmet>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
-        <Container maxWidth={false}>
+        <Container maxWidth="lg">
           <Header title="IA" sections={sections} table={tableOfContentsItems} />
-          <Grid container>
+          <Grid container style={{ marginTop: theme.spacing(3) }}>
             <Grid item xs={12} md={8}>
               <Container maxWidth="sm">
                 <MDXProvider components={components}>
