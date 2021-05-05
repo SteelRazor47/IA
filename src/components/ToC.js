@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react"
-import { makeStyles, Link, Paper, Typography } from "@material-ui/core"
+import {
+  makeStyles,
+  Link,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  useTheme,
+} from "@material-ui/core"
 import { Link as GatsbyLink } from "gatsby"
 
 const useStyles = makeStyles(theme => ({
@@ -66,6 +74,47 @@ const useStyles = makeStyles(theme => ({
     },
   },
 }))
+
+function RenderItemsList({ items, activeId, level }) {
+  const classes = useStyles()
+  const theme = useTheme()
+  return (
+    <React.Fragment>
+      {items.map(item => (
+        <React.Fragment>
+          <ListItem
+            style={{ paddingLeft: theme.spacing(level + 2) }}
+            key={item.url}
+          >
+            <Link
+              color="inherit"
+              noWrap
+              key={item.url}
+              variant="body2"
+              component={GatsbyLink}
+              to={item.url}
+              className={
+                activeId === item.url.slice(1)
+                  ? classes.activeUnderline
+                  : classes.underline
+              }
+            >
+              {item.title}
+            </Link>
+          </ListItem>
+
+          {item.items && (
+            <RenderItemsList
+              items={item.items}
+              activeId={activeId}
+              level={level + 4}
+            />
+          )}
+        </React.Fragment>
+      ))}
+    </React.Fragment>
+  )
+}
 
 function renderItems(items, activeId, classes, style) {
   return (
@@ -164,6 +213,33 @@ export default function ToC({ tableOfContents }) {
           )}
         </div>
       </Paper>
+    </React.Fragment>
+  )
+}
+
+export function ToCDrawer({ tableOfContents }) {
+  const idList = getIds(tableOfContents)
+  const activeId = useActiveId(idList)
+  const classes = useStyles()
+  return (
+    <React.Fragment>
+      <Typography
+        component="h2"
+        variant="h5"
+        color="primary"
+        align="center"
+        noWrap
+        className={classes.title}
+      >
+        Indice
+      </Typography>
+      <List>
+        <RenderItemsList
+          items={tableOfContents}
+          activeId={activeId}
+          level={0}
+        />
+      </List>
     </React.Fragment>
   )
 }

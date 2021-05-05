@@ -1,15 +1,24 @@
-import React, { useContext } from "react"
-import PropTypes from "prop-types"
-import { makeStyles } from "@material-ui/core/styles"
-import Toolbar from "@material-ui/core/Toolbar"
-import Typography from "@material-ui/core/Typography"
-import Link from "@material-ui/core/Link"
-import { IconButton, Icon, Switch } from "@material-ui/core"
+import React, { useContext, useState } from "react"
+import {
+  makeStyles,
+  Toolbar,
+  Typography,
+  Link,
+  Icon,
+  IconButton,
+  Switch,
+  Drawer,
+  Hidden,
+  Divider,
+} from "@material-ui/core"
 import BrightnessHighIcon from "@material-ui/icons/BrightnessHigh"
 import Brightness3Icon from "@material-ui/icons/Brightness3"
+import ChevronRightIcon from "@material-ui/icons/ChevronRight"
+import MenuIcon from "@material-ui/icons/Menu"
 import { Link as GatsbyLink } from "gatsby"
 import { context } from "./provider"
 import logo from "../assets/chip.svg"
+import { ToCDrawer } from "./ToC"
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -23,6 +32,9 @@ const useStyles = makeStyles(theme => ({
     overflowX: "auto",
     borderBottom: `1px solid ${theme.palette.divider}`,
     marginBottom: theme.spacing(3),
+    [theme.breakpoints.down("xs")]:{
+      flexDirection: "column"
+    }
   },
   toolbarLink: {
     padding: theme.spacing(1),
@@ -34,19 +46,20 @@ export default function Header(props) {
   const isDark = useContext(context).isDark
   const changeTheme = useContext(context).changeTheme
   const classes = useStyles()
+  const [isDrawerOpen, setDrawerOpen] = useState(false)
 
   let toggle = <Switch checked={isDark} onChange={() => changeTheme(!isDark)} />
   let themeIcon = isDark ? <Brightness3Icon /> : <BrightnessHighIcon />
   const [hasMounted, setHasMounted] = React.useState(false)
   React.useEffect(() => {
     setHasMounted(true)
-  }, []);
+  }, [])
   if (!hasMounted) {
     toggle = null
     themeIcon = null
   }
 
-  const { sections, title } = props
+  const { sections, title, table } = props
 
   return (
     <React.Fragment>
@@ -79,8 +92,20 @@ export default function Header(props) {
         >
           {title}
         </Typography>
-        {themeIcon}
-        {toggle}
+        <Hidden smDown>
+          {themeIcon}
+          {toggle}
+        </Hidden>
+        <Hidden mdUp>
+          <IconButton
+            onClick={() => {
+              setDrawerOpen(true)
+            }}
+            className={classes.button}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Hidden>
       </Toolbar>
       <Toolbar
         component="nav"
@@ -101,11 +126,22 @@ export default function Header(props) {
           </Link>
         ))}
       </Toolbar>
+      <Drawer
+        anchor="right"
+        open={isDrawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
+        <Toolbar>
+          <IconButton onClick={() => setDrawerOpen(false)}>
+            <ChevronRightIcon />
+          </IconButton>
+          <span style={{ flex: 1 }} />
+          {themeIcon}
+          {toggle}
+        </Toolbar>
+        <Divider />
+        <ToCDrawer tableOfContents={table} />
+      </Drawer>
     </React.Fragment>
   )
-}
-
-Header.propTypes = {
-  sections: PropTypes.array,
-  title: PropTypes.string,
 }

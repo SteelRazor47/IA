@@ -7,6 +7,8 @@ import {
   CssBaseline,
   Container,
   Grid,
+  Hidden,
+  Link,
 } from "@material-ui/core"
 import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
@@ -20,9 +22,20 @@ import ToC from "./ToC"
 import "@fontsource/roboto"
 
 const components = {
-  h1: props => <Typography variant="h5" color="primary" {...props} />,
-  h2: props => <Typography variant="h6" color="primary" {...props} />,
-  h3: props => <Typography variant="h7" color="primary" {...props} />,
+  h1: props => <Typography variant="h4" color="primary" {...props} />,
+  h2: props => <Typography variant="h5" color="primary" {...props} />,
+  h3: props => <Typography variant="h6" color="primary" {...props} />,
+  a: props => (
+    <Link
+      style={{
+        overflowWrap: "break-word",
+        wordWrap: "break-word",
+        wordBreak: "break-all",
+        hyphens: "auto",
+      }}
+      {...props}
+    />
+  ),
 }
 
 export default function Layout({ data }) {
@@ -63,7 +76,7 @@ export default function Layout({ data }) {
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <Container maxWidth={false}>
-          <Header title="IA" sections={sections} />
+          <Header title="IA" sections={sections} table={tableOfContentsItems} />
           <Grid container>
             <Grid item xs={12} md={8}>
               <Container maxWidth="sm">
@@ -72,11 +85,13 @@ export default function Layout({ data }) {
                 </MDXProvider>
               </Container>
             </Grid>
-            <Grid item xs={false} md={4}>
-              {typeof tableOfContentsItems === "undefined" ? null : (
-                <ToC tableOfContents={tableOfContentsItems} />
-              )}
-            </Grid>
+            <Hidden smDown>
+              <Grid item xs={false} md={4}>
+                {typeof tableOfContentsItems === "undefined" ? null : (
+                  <ToC tableOfContents={tableOfContentsItems} />
+                )}
+              </Grid>
+            </Hidden>
             <Grid item xs={12}>
               <Footer />
             </Grid>
