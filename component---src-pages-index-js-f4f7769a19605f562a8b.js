@@ -1,0 +1,2 @@
+(self.webpackChunkia=self.webpackChunkia||[]).push([[678],{325:function(n,t,u){"use strict";u.r(t),u.d(t,{default:function(){return i}});var e=u(7294),c=u(5903);function i(){return(0,e.useEffect)((function(){(0,c.c4)("/aspetti-tecnici/")}),[]),null}}}]);
+//# sourceMappingURL=component---src-pages-index-js-f4f7769a19605f562a8b.js.map
